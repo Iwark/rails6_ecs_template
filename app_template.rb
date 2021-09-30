@@ -54,7 +54,7 @@ get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
 
 # create db
-run 'bundle exec rails db:create'
+run 'docker compose run web bundle exec rails db:create'
 
 # annotate gem
 run 'rails g annotate:install'
