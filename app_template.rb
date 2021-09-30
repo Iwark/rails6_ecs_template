@@ -37,7 +37,7 @@ run 'bundle install --path vendor/bundle --jobs=4'
 run "spring stop"
 
 # Simple Form
-generate("simple_form:install --bootstrap")
+generate("simple_form:install")
 
 # Devise
 generate("devise:install")
@@ -116,8 +116,11 @@ gsub_file 'app/views/layouts/application.html.slim', 'stylesheet_link_tag', 'sty
 run 'yarn add @fortawesome/fontawesome-free'
 get_remote('app/javascript/packs/application.js')
 get_remote('app/javascript/stylesheets/application.scss')
-get_remote('app/javascript/stylesheets/reset.scss')
 get_remote('app/assets/config/manifest.js')
+
+# tailwind
+run 'yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest'
+get_remote('tailwind.config.js')
 
 # pryrc
 get_remote('pryrc', '.pryrc')
