@@ -11,6 +11,10 @@ end
 
 @repo = ask("Type github repository name ex: Iwark/rails6_ecs_template")
 
+# vscode settings
+run 'mkdir .vscode'
+get_remote('vscode/settings.json', '.vscode/settings.json')
+
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
