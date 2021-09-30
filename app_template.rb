@@ -18,7 +18,8 @@ get_remote('vscode/settings.json', '.vscode/settings.json')
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
-# docker-compose
+# docker
+get_remote('Dockerfile')
 get_remote('docker-compose.yml')
 
 # .github (CI/CD)
