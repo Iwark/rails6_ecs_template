@@ -5,7 +5,6 @@ Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "lib/tasks/auto_annotate_models.rake"
-    - "lib/capistrano/tasks/unicorn.rake"
 AllCops:
   NewCops: enable
 Documentation:

@@ -44,5 +44,4 @@ doc/
 .DS_Store
 .idea
 .secret
-config/database.yml
 spec/examples.txt

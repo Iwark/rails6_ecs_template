@@ -14,6 +14,13 @@ end
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
+# .github (CI/CD)
+run 'mkdir -p .github/workflows'
+get_remote('github/workflows/build.yml', '.github/workflows/build.yml')
+gsub_file ".github/workflows/build.yml", /myapp/, @app_name
+get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
+get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
+
 # gitignore
 get_remote('gitignore', '.gitignore')
 
@@ -21,11 +28,7 @@ get_remote('gitignore', '.gitignore')
 get_remote('Gemfile')
 
 # Database
-if yes?('use PostgreSQL?(y/n)')
-  gsub_file 'Gemfile', /^gem\s\'sqlite3\'/, 'gem \'pg\''
-  get_remote('config/database.yml.example', 'config/database.yml')
-  gsub_file "config/database.yml", /myapp/, @app_name
-end
+get_remote('config/database.yml.example', 'config/database.yml')
 
 # install gems
 run 'bundle install --path vendor/bundle --jobs=4'
@@ -116,30 +119,11 @@ get_remote('app/javascript/stylesheets/application.scss')
 get_remote('app/javascript/stylesheets/reset.scss')
 get_remote('app/assets/config/manifest.js')
 
-# Whenever
-get_remote('config/schedule.rb')
-
-# Capistrano
-get_remote('Capfile')
-
 # pryrc
 get_remote('pryrc', '.pryrc')
 
 # Rubocop
 get_remote('rubocop.yml', '.rubocop.yml')
-
-# Deploy
-get_remote('config/deploy.rb.example', 'config/deploy.rb')
-gsub_file "config/deploy.rb", /my_repo/, @repo
-gsub_file "config/deploy.rb", /myapp/, @app_name
-run 'mkdir config/deploy'
-get_remote('config/deploy/production.rb.example', 'config/deploy/production.rb')
-gsub_file "config/deploy/production.rb", /myapp/, @app_name
-
-# Unicorn
-run 'mkdir -p lib/capistrano/tasks'
-get_remote('config/unicorn.rb')
-get_remote('lib/capistrano/tasks/unicorn.rake')
 
 # Kaminari config
 generate("kaminari:config")
@@ -175,6 +159,9 @@ get_remote('config/initializers/lograge.rb')
 get_remote('config/initializers/okcomputer.rb')
 get_remote('config/locales/okcomputer.en.yml')
 get_remote('config/locales/okcomputer.ja.yml')
+
+# rubocop
+run 'bundle exec rubocop -A'
 
 # git
 git
