@@ -18,6 +18,9 @@ get_remote('vscode/settings.json', '.vscode/settings.json')
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
+# docker-compose
+get_remote('docker-compose.yml')
+
 # .github (CI/CD)
 run 'mkdir -p .github/workflows'
 get_remote('github/workflows/build.yml', '.github/workflows/build.yml')
@@ -64,12 +67,14 @@ application  do
     # Set timezone
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
-    # 日本語化
+    
+    # i18n default to japanese
     I18n.available_locales = [:en, :ja]
     I18n.enforce_available_locales = true
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
-    # generatorの設定
+    
+    # generator settings
     config.generators do |g|
       g.orm :active_record
       g.template_engine :slim
@@ -82,20 +87,24 @@ application  do
       g.assets false
       g.helper false
     end
-    # libファイルの自動読み込み
+
+    # load lib files
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
+    # use sidekiq as active_job.queue_adapter
+    config.active_job.queue_adapter = :sidekiq
   }
 end
 
 # For Bullet (N+1 Problem)
 insert_into_file 'config/environments/development.rb',%(
   config.after_initialize do
-    Bullet.enable = true # Bulletプラグインを有効
-    Bullet.alert = true # JavaScriptでの通知
-    Bullet.bullet_logger = true # log/bullet.logへの出力
-    Bullet.console = true # ブラウザのコンソールログに記録
-    Bullet.rails_logger = true # Railsログに出力
+    Bullet.enable = true
+    Bullet.alert = true # JavaScript alerts
+    Bullet.bullet_logger = true # outputs to log/bullet.log
+    Bullet.console = true # log to web console
+    Bullet.rails_logger = true # log to rails log
   end
 ), after: 'config.assets.debug = true'
 
@@ -166,6 +175,10 @@ get_remote('config/initializers/lograge.rb')
 get_remote('config/initializers/okcomputer.rb')
 get_remote('config/locales/okcomputer.en.yml')
 get_remote('config/locales/okcomputer.ja.yml')
+
+# sidekiq
+get_remote('app/jobs/application_job.rb')
+get_remote('config/initializers/sidekiq.rb')
 
 # rubocop
 run 'bundle exec rubocop -A'

@@ -8,6 +8,7 @@ It generates a rails project with:
 - Rails 6.1.4
 - [tailwind](https://tailwindcss.com/)
 - [slim template](http://slim-lang.com/)
+- [sidekiq](https://github.com/mperham/sidekiq) with Redis
 
 It assumes you're using [vscode](https://code.visualstudio.com/) as your editor thus it adds `.vscode/settings.json` for you.
 

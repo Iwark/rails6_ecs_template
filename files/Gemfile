@@ -29,29 +29,34 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 ## custom gems
-gem 'slim-rails'
-gem 'simple_form'
 gem 'action_args'
 gem 'active_decorator'
-gem 'html5_validators'
-gem 'rails-flog'
-gem 'newrelic_rpm'
-gem 'kaminari'
-gem 'nokogiri'
-gem 'seed-fu', '~> 2.3'
+gem 'aws-sdk-rails'
+gem 'carrierwave'
+gem 'config'
 gem 'devise'
 gem 'enum_help'
-gem 'config'
-gem 'carrierwave'
-gem 'mini_magick'
 gem 'fog-aws'
-gem 'aws-sdk-rails'
-gem "lograge"
+gem 'html5_validators'
+gem 'httparty'
+gem 'inline_svg'
+gem 'kaminari'
+gem 'lograge'
+gem 'mini_magick'
+gem 'newrelic_rpm'
+gem 'nokogiri'
+gem 'okcomputer'
+gem 'rails-flog'
 gem 'rexml'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'rubocop-rspec', require: false
-gem 'okcomputer'
+gem 'seed-fu', '~> 2.3'
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'sidekiq-unique-jobs'
+gem 'simple_form'
+gem 'slim-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -59,39 +64,33 @@ group :development, :test do
 
   ## custom gems
   gem 'annotate'
-  gem 'pry-rails'
-  gem 'pry-byebug'
+  gem 'database_rewinder'
+  gem 'factory_bot_rails'
+  gem 'guard-rspec'
   gem 'hirb'
   gem 'hirb-unicode-steakknife'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rb-fsevent'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
-  gem 'guard-rspec'
-  gem 'rb-fsevent'
-  gem 'factory_bot_rails'
-  gem 'database_rewinder'
   gem 'timecop'
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 4.1.0'
+  gem 'listen', '~> 3.3'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console', '>= 4.1.0'
 
   ## custom gems
-  gem 'html2slim'
   gem 'bullet'
+  gem 'html2slim'
   # gem 'rack-mini-profiler'
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails-console'
-  gem 'capistrano-logrotate'
 end
 
 group :test do
