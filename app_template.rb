@@ -16,6 +16,19 @@ get_remote('vscode/settings.json', '.vscode/settings.json')
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
+# fontawesome
+run 'yarn add @fortawesome/fontawesome-free'
+get_remote('app/javascript/packs/application.js')
+get_remote('app/javascript/stylesheets/application.scss')
+get_remote('app/assets/config/manifest.js')
+
+# tailwind
+run 'yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest'
+get_remote('tailwind.config.js')
+
+# yarn
+run 'yarn'
+
 # docker
 get_remote('Dockerfile')
 get_remote('docker-compose.yml')
@@ -124,16 +137,6 @@ run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml
 run 'gem install html2slim'
 run 'bundle exec erb2slim -d app/views'
 gsub_file 'app/views/layouts/application.html.slim', 'stylesheet_link_tag', 'stylesheet_pack_tag'
-
-# fontawesome
-run 'yarn add @fortawesome/fontawesome-free'
-get_remote('app/javascript/packs/application.js')
-get_remote('app/javascript/stylesheets/application.scss')
-get_remote('app/assets/config/manifest.js')
-
-# tailwind
-run 'yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest'
-get_remote('tailwind.config.js')
 
 # pryrc
 get_remote('pryrc', '.pryrc')
