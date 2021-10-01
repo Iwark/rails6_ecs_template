@@ -125,6 +125,9 @@ insert_into_file 'config/environments/development.rb',%(
     Bullet.console = true # log to web console
     Bullet.rails_logger = true # log to rails log
   end
+
+  config.hosts << Settings.domain
+  config.web_console.permissions = '0.0.0.0/0'
 ), after: 'config.assets.debug = true'
 
 # SES
