@@ -50,8 +50,8 @@ get_remote('Gemfile')
 get_remote('config/database.yml.example', 'config/database.yml')
 
 # install gems
-run 'bundle install --path vendor/bundle --jobs=4'
 run 'bundle lock --add-platform aarch64-linux-musl'
+run 'bundle install --path vendor/bundle --jobs=4'
 
 # Fix pesky hangtime
 run "spring stop"
