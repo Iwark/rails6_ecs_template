@@ -56,16 +56,16 @@ get_remote('tailwind.config.js')
 run 'yarn'
 
 # webpacker install
-run 'rails webpacker:install'
+run 'docker compose run web bundle exec rails webpacker:install'
 
 # Fix pesky hangtime
 run "spring stop"
 
 # Simple Form
-generate("simple_form:install")
+run 'docker compose run web bundle exec rails g simple_form:install'
 
 # Devise
-generate("devise:install")
+run 'docker compose run web bundle exec rails g devise:install'
 get_remote('config/locales/devise.en.yml')
 get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
@@ -75,7 +75,7 @@ run 'mkdir tmp/backups'
 run 'docker compose run web bundle exec rails db:create'
 
 # annotate gem
-run 'rails g annotate:install'
+run 'docker compose run web bundle exec rails g annotate:install'
 
 # set config/application.rb
 application  do
@@ -137,8 +137,7 @@ insert_into_file 'config/environments/production.rb',%(
 run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
 
 # erb to slim
-run 'gem install html2slim'
-run 'bundle exec erb2slim -d app/views'
+run 'docker compose run web bundle exec erb2slim -d app/views'
 gsub_file 'app/views/layouts/application.html.slim', 'stylesheet_link_tag', 'stylesheet_pack_tag'
 
 # pryrc
@@ -148,10 +147,10 @@ get_remote('pryrc', '.pryrc')
 get_remote('rubocop.yml', '.rubocop.yml')
 
 # Kaminari config
-generate("kaminari:config")
+run 'docker compose run web bundle exec rails g kaminari:config'
 
 # Rspec
-generate("rspec:install")
+run 'docker compose run web bundle exec rails g rspec:install'
 run "echo '--color -f d' > .rspec"
 
 # Guard
@@ -187,7 +186,7 @@ get_remote('app/jobs/application_job.rb')
 get_remote('config/initializers/sidekiq.rb')
 
 # rubocop
-run 'bundle exec rubocop -A'
+run 'docker compose run web bundle exec rubocop -A'
 
 # git
 git
