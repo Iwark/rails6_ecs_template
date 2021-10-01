@@ -26,6 +26,9 @@ gsub_file ".github/workflows/build.yml", /myapp/, @app_name
 get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
 get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 
+# Set database config to use postgresql
+get_remote('config/database.yml.example', 'config/database.yml')
+
 # Install gems
 get_remote('Gemfile')
 run 'bundle lock --add-platform aarch64-linux-musl'
@@ -68,7 +71,6 @@ get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
 
 # set up db
-get_remote('config/database.yml.example', 'config/database.yml')
 run 'mkdir tmp/backups'
 run 'docker compose run web bundle exec rails db:create'
 
