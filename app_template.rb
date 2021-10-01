@@ -16,6 +16,20 @@ get_remote('vscode/settings.json', '.vscode/settings.json')
 # .tool_versions
 get_remote('tool-versions', '.tool-versions')
 
+# gitignore
+get_remote('gitignore', '.gitignore')
+
+# CI/CD (github action)
+run 'mkdir -p .github/workflows'
+get_remote('github/workflows/build.yml', '.github/workflows/build.yml')
+gsub_file ".github/workflows/build.yml", /myapp/, @app_name
+get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
+get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
+
+#####
+# assets
+#####
+
 # fontawesome
 run 'yarn add @fortawesome/fontawesome-free'
 get_remote('app/javascript/packs/application.js')
@@ -29,25 +43,15 @@ get_remote('tailwind.config.js')
 # yarn
 run 'yarn'
 
+# webpacker install
+run 'rails webpacker:install'
+
 # docker
 get_remote('Dockerfile')
 get_remote('docker-compose.yml')
 
-# .github (CI/CD)
-run 'mkdir -p .github/workflows'
-get_remote('github/workflows/build.yml', '.github/workflows/build.yml')
-gsub_file ".github/workflows/build.yml", /myapp/, @app_name
-get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
-get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
-
-# gitignore
-get_remote('gitignore', '.gitignore')
-
 # Gemfile
 get_remote('Gemfile')
-
-# Database
-get_remote('config/database.yml.example', 'config/database.yml')
 
 # install gems
 run 'bundle lock --add-platform aarch64-linux-musl'
@@ -65,15 +69,13 @@ get_remote('config/locales/devise.en.yml')
 get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
 
-# create db
+# set up db
+get_remote('config/database.yml.example', 'config/database.yml')
 run 'mkdir tmp/backups'
 run 'docker compose run web bundle exec rails db:create'
 
 # annotate gem
 run 'rails g annotate:install'
-
-# webpacker install
-run 'rails webpacker:install'
 
 # set config/application.rb
 application  do
