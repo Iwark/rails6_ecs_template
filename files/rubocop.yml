@@ -5,9 +5,15 @@ AllCops:
   NewCops: enable
 Documentation:
   Enabled: false
+Layout/LineLength:
+  Exclude:
+    - "config/**/*"
 Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "lib/tasks/auto_annotate_models.rake"
+Rails/FilePath:
+  Exclude:
+    - "config/**/*"
 Style/FrozenStringLiteralComment:
   Enabled: false
