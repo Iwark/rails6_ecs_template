@@ -9,7 +9,7 @@ services:
     expose:
       - "5433"
     volumes:
-      - ../tmp/backups:/home/backups
+      - ./tmp/backups:/home/backups
     ports:
       - "5433:5433"
     command: -p 5433
@@ -26,10 +26,10 @@ services:
     logging:
       driver: none
   sidekiq:
-    build: ../
+    build: ./
     command: bundle exec sidekiq
     volumes:
-      - ../:/app
+      - ./:/app
       - bundle:/app/vendor/bundle
     environment:
       DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb
@@ -42,7 +42,7 @@ services:
     depends_on:
       - "redis"
   web: &app_base
-    build: ../
+    build: ./
     command: bin/rails s -p 3000 -e development -b '0.0.0.0'
     environment:
       DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb
@@ -55,7 +55,7 @@ services:
       BUNDLE_PATH: /app/vendor/bundle
       BUNDLE_WITHOUT:
     volumes:
-      - ../:/app
+      - ./:/app
       - bundle:/app/vendor/bundle
     ports:
       - "3000:3000"
