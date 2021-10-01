@@ -32,7 +32,7 @@ get_remote('config/database.yml.example', 'config/database.yml')
 # Install gems
 get_remote('Gemfile')
 run 'bundle lock --add-platform aarch64-linux-musl'
-run 'bundle install --path vendor/bundle --jobs=4'
+run 'docker compose run web bundle install --path vendor/bundle --jobs=4'
 
 #####
 # assets
