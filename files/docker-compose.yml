@@ -31,6 +31,11 @@ services:
     volumes:
       - ./:/app
       - bundle:/app/vendor/bundle
+      # exclude volumes
+      - /app/vendor
+      - /app/tmp
+      - /app/log
+      - /app/.git
     environment:
       DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb
       RAILS_ENV: development
@@ -57,6 +62,11 @@ services:
     volumes:
       - ./:/app
       - bundle:/app/vendor/bundle
+      # exclude volumes
+      - /app/vendor
+      - /app/tmp
+      - /app/log
+      - /app/.git
     ports:
       - "3000:3000"
     depends_on:

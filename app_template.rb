@@ -134,7 +134,7 @@ insert_into_file 'config/environments/production.rb',%(
 ), after: 'config.action_mailer.perform_caching = false'
 
 # Japanese locale
-run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
+run 'wget https://raw.githubusercontent.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
 
 # erb to slim
 run 'docker compose run web bundle exec erb2slim -d app/views'

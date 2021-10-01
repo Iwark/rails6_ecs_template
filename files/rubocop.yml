@@ -1,11 +1,13 @@
 require:
   - rubocop-rails
   - rubocop-rspec
+AllCops:
+  NewCops: enable
+Documentation:
+  Enabled: false
 Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "lib/tasks/auto_annotate_models.rake"
-AllCops:
-  NewCops: enable
-Documentation:
+Style/FrozenStringLiteralComment:
   Enabled: false
