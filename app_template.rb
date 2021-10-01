@@ -26,6 +26,11 @@ gsub_file ".github/workflows/build.yml", /myapp/, @app_name
 get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
 get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 
+# Install gems
+get_remote('Gemfile')
+run 'bundle lock --add-platform aarch64-linux-musl'
+run 'bundle install --path vendor/bundle --jobs=4'
+
 #####
 # assets
 #####
@@ -49,13 +54,6 @@ run 'rails webpacker:install'
 # docker
 get_remote('Dockerfile')
 get_remote('docker-compose.yml')
-
-# Gemfile
-get_remote('Gemfile')
-
-# install gems
-run 'bundle lock --add-platform aarch64-linux-musl'
-run 'bundle install --path vendor/bundle --jobs=4'
 
 # Fix pesky hangtime
 run "spring stop"
