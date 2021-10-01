@@ -29,6 +29,10 @@ get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 # Set database config to use postgresql
 get_remote('config/database.yml.example', 'config/database.yml')
 
+# docker
+get_remote('Dockerfile')
+get_remote('docker-compose.yml')
+
 # Install gems
 get_remote('Gemfile')
 run 'bundle lock --add-platform aarch64-linux-musl'
@@ -53,10 +57,6 @@ run 'yarn'
 
 # webpacker install
 run 'rails webpacker:install'
-
-# docker
-get_remote('Dockerfile')
-get_remote('docker-compose.yml')
 
 # Fix pesky hangtime
 run "spring stop"
