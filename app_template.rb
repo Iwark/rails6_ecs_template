@@ -52,14 +52,13 @@ get_remote('app/assets/config/manifest.js')
 run 'yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest'
 get_remote('tailwind.config.js')
 
-# postcss
-get_remote('postcss.config.js')
-
 # yarn
 run 'yarn'
 
 # webpacker install
 run 'docker compose run web bundle exec rails webpacker:install'
+get_remote('postcss.config.js')
+get_remote('config/webpacker.yml')
 
 # Fix pesky hangtime
 run "spring stop"
