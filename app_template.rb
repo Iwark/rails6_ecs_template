@@ -63,6 +63,7 @@ run 'yarn'
 get_remote('Gemfile')
 run 'bundle lock --add-platform aarch64-linux-musl'
 run 'bundle install --path vendor/bundle --jobs=4'
+run 'docker compose run web bundle install'
 
 # install hotwire
 run 'bundle exec rails hotwire:install'
