@@ -6,7 +6,6 @@ def get_remote(src, dest = nil)
   get(remote_file, dest)
 end
 
-# アプリ名の取得
 @app_name = app_name
 
 # vscode settings
@@ -26,6 +25,18 @@ gsub_file ".github/workflows/build.yml", /myapp/, @app_name
 get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
 get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 
+# docker
+get_remote('Dockerfile')
+get_remote('docker-compose.yml')
+
+# Set database config to use postgresql
+get_remote('config/database.yml.example', 'config/database.yml')
+run 'mkdir tmp/backups'
+
+#####
+# assets
+#####
+
 # fontawesome
 run 'yarn add @fortawesome/fontawesome-free'
 get_remote('app/javascript/packs/application.js')
@@ -43,27 +54,21 @@ run 'yarn add alpinejs alpine-turbo-drive-adapter'
 run 'yarn remove turbolinks'
 run 'yarn add @hotwired/turbo-rails stimulus'
 
-# yarn
 run 'yarn'
 
-# docker
-get_remote('Dockerfile')
-get_remote('docker-compose.yml')
-
-# Set database config to use postgresql
-get_remote('config/database.yml.example', 'config/database.yml')
-run 'mkdir tmp/backups'
-
+#####
 # Install gems
+#####
+
 get_remote('Gemfile')
 run 'bundle lock --add-platform aarch64-linux-musl'
-run 'docker compose run web bundle install --path vendor/bundle --jobs=4'
+run 'bundle install --path vendor/bundle --jobs=4'
 
 # install hotwire
-run 'docker compose run web bundle exec rails hotwire:install'
+run 'bundle exec rails hotwire:install'
 
 # webpacker install
-run 'docker compose run web bundle exec rails webpacker:install'
+run 'bundle exec rails webpacker:install'
 get_remote('postcss.config.js')
 get_remote('config/webpacker.yml')
 get_remote('config/webpack/environment.js')
@@ -72,19 +77,19 @@ get_remote('config/webpack/environment.js')
 run "spring stop"
 
 # Simple Form
-run 'docker compose run web bundle exec rails g simple_form:install'
+run 'bundle exec rails g simple_form:install'
 
 # Devise
-run 'docker compose run web bundle exec rails g devise:install'
+run 'bundle exec rails g devise:install'
 get_remote('config/locales/devise.en.yml')
 get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
 
 # set up db
-run 'docker compose run web bundle exec rails db:create'
+run 'bundle exec rails db:create'
 
 # annotate gem
-run 'docker compose run web bundle exec rails g annotate:install'
+run 'bundle exec rails g annotate:install'
 
 # set config/application.rb
 application  do
@@ -149,7 +154,7 @@ insert_into_file 'config/environments/production.rb',%(
 run 'wget https://raw.githubusercontent.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
 
 # erb to slim
-run 'docker compose run web bundle exec erb2slim -d app/views'
+run 'bundle exec erb2slim -d app/views'
 gsub_file 'app/views/layouts/application.html.slim', 'stylesheet_link_tag', 'stylesheet_pack_tag'
 gsub_file 'app/views/layouts/application.html.slim', 'data-turbolinks-track', 'data-turbo-track'
 
@@ -160,10 +165,10 @@ get_remote('pryrc', '.pryrc')
 get_remote('rubocop.yml', '.rubocop.yml')
 
 # Kaminari config
-run 'docker compose run web bundle exec rails g kaminari:config'
+run 'bundle exec rails g kaminari:config'
 
 # Rspec
-run 'docker compose run web bundle exec rails g rspec:install'
+run 'bundle exec rails g rspec:install'
 run "echo '--color -f d' > .rspec"
 
 # Guard
@@ -199,7 +204,7 @@ get_remote('app/jobs/application_job.rb')
 get_remote('config/initializers/sidekiq.rb')
 
 # rubocop
-run 'docker compose run web bundle exec rubocop -A'
+run 'bundle exec rubocop -A'
 
 # git
 git
