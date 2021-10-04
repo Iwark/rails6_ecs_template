@@ -28,6 +28,7 @@ get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 
 # Set database config to use postgresql
 get_remote('config/database.yml.example', 'config/database.yml')
+run 'mkdir tmp/backups'
 
 # docker
 get_remote('Dockerfile')
@@ -84,7 +85,6 @@ get_remote('config/locales/devise.ja.yml')
 gsub_file "config/initializers/devise.rb", /'please-change-me-at-config-initializers-devise@example.com'/, '"no-reply@#{Settings.domain}"'
 
 # set up db
-run 'mkdir tmp/backups'
 run 'docker compose run web bundle exec rails db:create'
 
 # annotate gem
