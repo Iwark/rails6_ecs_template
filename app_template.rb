@@ -52,8 +52,18 @@ get_remote('app/assets/config/manifest.js')
 run 'yarn add -D tailwindcss@latest postcss@latest postcss-loader@4.3 autoprefixer@latest '
 get_remote('tailwind.config.js')
 
+# alpinejs
+run 'yarn add alpinejs alpine-turbo-drive-adapter'
+
+# hotwire
+run 'yarn remove turbolinks'
+run 'yarn add @hotwired/turbo-rails stimulus'
+
 # yarn
 run 'yarn'
+
+# install hotwire
+run 'docker compose run web bundle exec rails hotwire:install'
 
 # webpacker install
 run 'docker compose run web bundle exec rails webpacker:install'
@@ -145,6 +155,7 @@ run 'wget https://raw.githubusercontent.com/svenfuchs/rails-i18n/master/rails/lo
 # erb to slim
 run 'docker compose run web bundle exec erb2slim -d app/views'
 gsub_file 'app/views/layouts/application.html.slim', 'stylesheet_link_tag', 'stylesheet_pack_tag'
+gsub_file 'app/views/layouts/application.html.slim', 'data-turbolinks-track', 'data-turbo-track'
 
 # pryrc
 get_remote('pryrc', '.pryrc')
