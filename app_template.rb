@@ -68,12 +68,6 @@ run 'docker compose run web bundle install'
 # install hotwire
 run 'bundle exec rails hotwire:install'
 
-# webpacker install
-run 'bundle exec rails webpacker:install'
-get_remote('postcss.config.js')
-get_remote('config/webpacker.yml')
-get_remote('config/webpack/environment.js')
-
 # Fix pesky hangtime
 run "spring stop"
 
@@ -205,6 +199,12 @@ get_remote('app/jobs/application_job.rb')
 get_remote('config/initializers/sidekiq.rb')
 
 after_bundle do
+
+  # webpacker install
+  run 'bundle exec rails webpacker:install'
+  get_remote('postcss.config.js')
+  get_remote('config/webpacker.yml')
+  get_remote('config/webpack/environment.js')
 
   # rubocop
   run 'bundle exec rubocop -A'
