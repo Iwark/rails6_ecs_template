@@ -26,23 +26,6 @@ gsub_file ".github/workflows/build.yml", /myapp/, @app_name
 get_remote('github/workflows/lint.yml', '.github/workflows/lint.yml')
 get_remote('github/workflows/test.yml', '.github/workflows/test.yml')
 
-# Set database config to use postgresql
-get_remote('config/database.yml.example', 'config/database.yml')
-run 'mkdir tmp/backups'
-
-# docker
-get_remote('Dockerfile')
-get_remote('docker-compose.yml')
-
-# Install gems
-get_remote('Gemfile')
-run 'bundle lock --add-platform aarch64-linux-musl'
-run 'docker compose run web bundle install --path vendor/bundle --jobs=4'
-
-#####
-# assets
-#####
-
 # fontawesome
 run 'yarn add @fortawesome/fontawesome-free'
 get_remote('app/javascript/packs/application.js')
@@ -62,6 +45,19 @@ run 'yarn add @hotwired/turbo-rails stimulus'
 
 # yarn
 run 'yarn'
+
+# docker
+get_remote('Dockerfile')
+get_remote('docker-compose.yml')
+
+# Set database config to use postgresql
+get_remote('config/database.yml.example', 'config/database.yml')
+run 'mkdir tmp/backups'
+
+# Install gems
+get_remote('Gemfile')
+run 'bundle lock --add-platform aarch64-linux-musl'
+run 'docker compose run web bundle install --path vendor/bundle --jobs=4'
 
 # install hotwire
 run 'docker compose run web bundle exec rails hotwire:install'
