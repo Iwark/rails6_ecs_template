@@ -204,11 +204,13 @@ get_remote('config/locales/okcomputer.ja.yml')
 get_remote('app/jobs/application_job.rb')
 get_remote('config/initializers/sidekiq.rb')
 
-# rubocop
-run 'bundle exec rubocop -A'
+after_bundle do
 
-# git
-git
-git :init
-git add: '.'
-git commit: "-a -m 'rails new #{@app_name} -m https://raw.githubusercontent.com/Iwark/rails6_ecs_template/master/app_template.rb'"
+  # rubocop
+  run 'bundle exec rubocop -A'
+
+  # git
+  git :init
+  git add: '.'
+  git commit: "-a -m 'rails new #{@app_name} -m https://raw.githubusercontent.com/Iwark/rails6_ecs_template/master/app_template.rb'"
+end
