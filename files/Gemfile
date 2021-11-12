@@ -30,7 +30,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'action_args'
 gem 'active_decorator'
 gem 'aws-sdk-rails'
-gem 'carrierwave'
 gem 'config'
 gem 'devise'
 gem 'enum_help'
@@ -56,6 +55,8 @@ gem 'sidekiq-cron'
 gem 'sidekiq-unique-jobs'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'turbo-rails', '~> 0.8'
+gem 'view_component', require: 'view_component/engine'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

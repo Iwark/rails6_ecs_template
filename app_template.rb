@@ -184,9 +184,6 @@ gsub_file "config/settings.yml", /myapp/, @app_name
 # AWS
 get_remote('config/initializers/aws.rb')
 
-# carrierwave
-get_remote('config/initializers/carrierwave.rb')
-
 # lograge
 get_remote('config/initializers/lograge.rb')
 
