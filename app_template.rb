@@ -44,7 +44,7 @@ get_remote('app/javascript/stylesheets/application.scss')
 get_remote('app/assets/config/manifest.js')
 
 # tailwind
-run 'yarn add -D tailwindcss@latest postcss@latest postcss-loader@4.3 autoprefixer@latest '
+run 'yarn add tailwindcss@latest postcss@latest postcss-loader@4.3 autoprefixer@latest'
 get_remote('tailwind.config.js')
 
 # alpinejs
