@@ -13,11 +13,14 @@ ENV BUNDLE_WITHOUT development:test
 
 RUN gem install bundler --no-document --version 2.2.16
 
+RUN apk update && apk add --no-cache --update \
+  build-base \
+  linux-headers
+
 FROM base AS builder
 
 # Add packages
 RUN apk update && apk add --no-cache --update \
-  build-base \
   postgresql-dev \
   tzdata \
   git \
