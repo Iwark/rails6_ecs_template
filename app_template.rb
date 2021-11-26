@@ -196,6 +196,10 @@ get_remote('config/locales/okcomputer.ja.yml')
 get_remote('app/jobs/application_job.rb')
 get_remote('config/initializers/sidekiq.rb')
 
+# i18n-tasks
+run 'cp $(bundle exec i18n-tasks gem-path)/templates/config/i18n-tasks.yml config/'
+run 'cp $(bundle exec i18n-tasks gem-path)/templates/rspec/i18n_spec.rb spec/'
+
 after_bundle do
 
   # webpacker install
