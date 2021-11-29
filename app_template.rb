@@ -137,6 +137,11 @@ insert_into_file 'config/environments/development.rb',%(
   config.web_console.permissions = '0.0.0.0/0'
 ), after: 'config.assets.debug = true'
 
+# Default url options for test
+insert_into_file 'config/environments/test.rb',%(
+  routes.default_url_options[:host]= 'localhost:3000'
+), after: 'config.action_view.cache_template_loading = true'
+
 # SES
 insert_into_file 'config/environments/production.rb',%(
   config.action_mailer.default_url_options = {
