@@ -51,6 +51,8 @@ gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'rubocop-rspec', require: false
 gem 'seed-fu', '~> 2.3'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sidekiq-unique-jobs'
