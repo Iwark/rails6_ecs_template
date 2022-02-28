@@ -30,7 +30,7 @@ services:
     command: bundle exec sidekiq
     volumes:
       - ./:/app
-      - bundle:/app/vendor/bundle
+      - ./vendor/bundle:/app/vendor/bundle
       # exclude volumes
       - /app/vendor
       - /app/tmp
@@ -41,7 +41,6 @@ services:
       RAILS_ENV: development
       REDIS_HOST: redis
       REDIS_PORT: 6380
-      SYNC_WITH_AICHAN_URL: http://host.docker.internal:3001/dev
       BUNDLE_PATH: /app/vendor/bundle
       BUNDLE_WITHOUT:
     depends_on:
@@ -50,18 +49,18 @@ services:
     build: ./
     command: bin/rails s -p 3000 -e development -b '0.0.0.0'
     environment:
+      TEST_DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb_test
       DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb
       RAILS_ENV: development
       NODE_ENV: development
       RAILS_MAX_THREADS: 5
       REDIS_HOST: redis
       REDIS_PORT: 6380
-      SYNC_WITH_AICHAN_URL: http://host.docker.internal:3001/dev
       BUNDLE_PATH: /app/vendor/bundle
       BUNDLE_WITHOUT:
     volumes:
       - ./:/app
-      - bundle:/app/vendor/bundle
+      - ./vendor/bundle:/app/vendor/bundle
       # exclude volumes
       - /app/vendor
       - /app/tmp
@@ -81,6 +80,19 @@ services:
       - "web"
     tty: false
     stdin_open: false
+  guard:
+    build: ./
+    command: bundle exec guard --no-bundler-warning --no-interactions
+    environment:
+      TEST_DATABASE_URL: postgres://myuser:admin_pass@db:5433/mydb_test
+      RAILS_ENV: test
+      BUNDLE_PATH: /app/vendor/bundle
+      BUNDLE_WITHOUT:
+    volumes:
+      - ./:/app
+      - ./vendor/bundle:/app/vendor/bundle
+    depends_on:
+      - "db"
 volumes:
   db:
   bundle:

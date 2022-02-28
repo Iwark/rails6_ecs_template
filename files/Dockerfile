@@ -11,9 +11,8 @@ ENV BUNDLE_DEPLOYMENT true
 ENV BUNDLE_PATH vendor/bundle
 ENV BUNDLE_WITHOUT development:test
 
-RUN gem install bundler --no-document --version 2.2.16
-
-RUN apk update && apk add --no-cache --update \
+RUN gem install bundler --no-document --version 2.3.5 && \
+  apk update && apk add --no-cache --update \
   build-base \
   linux-headers
 
@@ -84,6 +83,6 @@ COPY --from=assets /app/public/packs public/packs
 ARG SHA
 ENV SHA ${SHA}
 ENV PORT 3000
-EXPOSE 3000
+EXPOSE ${PORT}
 
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]
