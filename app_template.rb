@@ -171,6 +171,7 @@ run 'bundle exec rails g kaminari:config'
 # Rspec
 run 'bundle exec rails g rspec:install'
 run "echo '--color -f d' > .rspec"
+get_remote('spec/rails_helper.rb')
 
 # Guard
 get_remote('Guardfile')
